@@ -1,0 +1,249 @@
+
+<div class="container">
+  <h3>Obliczenie równowagę genetyczną</h3>
+
+  <h4>1. Dodaj genotypy do tabeli:</h4>
+
+  <table>
+      <tr>
+        <th>Genotyp</th>
+        <th>Fenotyp</th>
+        <th>Liczebność genotypów</th>
+        <th>Frekwencja genotypów</th>
+      </tr>
+  
+      <tr>
+        <td>
+            <input (keyup)="checkNumber(dominantHomozygous, 'A'); toUpper(dominantHomozygous, 'A');" maxlength="1" pattern="[a-zA-Z]*" [ngClass]="{'missing-validation': !validateGenotypeFor(dominantHomozygous)}" [(ngModel)]="dominantHomozygous.alleleA" class="alleles-box" type="text">
+            <input (keyup)="checkNumber(dominantHomozygous, 'B'); toUpper(dominantHomozygous, 'B');" maxlength="1" pattern="[a-zA-Z]*" [ngClass]="{'missing-validation': !validateGenotypeFor(dominantHomozygous)}" [(ngModel)]="dominantHomozygous.alleleB" class="alleles-box" type="text">
+            <span>N2</span>
+        </td>
+        <td>
+            <input [ngClass]="{'missing-validation': !validatePhenotypeFor(dominantHomozygous)}" [(ngModel)]="dominantHomozygous.phenotype" type="text">
+        </td>
+        <td>
+            <input 
+              [ngClass]="{'missing-validation': !validateGenotypeCountFor(dominantHomozygous)}" 
+              [(ngModel)]="dominantHomozygous.genotypeCount" 
+              (change)="reset()"
+              maxlength = "8"
+              min="0"
+              type="number">
+        </td>
+        <td>
+            <input [(ngModel)]="dominantHomozygous.genotypeFrequency" class="grayed-out" readonly type="text">
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+            <input (keyup)="checkNumber(dominantHeterozygous, 'A'); toUpper(dominantHeterozygous, 'A');" maxlength="1" pattern="[a-zA-Z]*" [ngClass]="{'missing-validation': !validateGenotypeFor(dominantHeterozygous)}" [(ngModel)]="dominantHeterozygous.alleleA" class="alleles-box" type="text">
+            <input (keyup)="checkNumber(dominantHeterozygous, 'B'); toLower(dominantHeterozygous, 'B');" maxlength="1" pattern="[a-zA-Z]*" [ngClass]="{'missing-validation': !validateGenotypeFor(dominantHeterozygous)}" [(ngModel)]="dominantHeterozygous.alleleB" class="alleles-box" type="text">
+            <span>N1</span>
+        </td>
+        <td>
+            <input [ngClass]="{'missing-validation': !validatePhenotypeFor(dominantHeterozygous)}" [(ngModel)]="dominantHeterozygous.phenotype" type="text">
+        </td>
+        <td>
+            <input 
+            [ngClass]="{'missing-validation': !validateGenotypeCountFor(dominantHeterozygous)}" 
+            [(ngModel)]="dominantHeterozygous.genotypeCount" 
+            (change)="reset()"
+            maxlength = "8"
+            min="0"
+            type="number">
+        </td>
+        <td>
+            <input [(ngModel)]="dominantHeterozygous.genotypeFrequency" class="grayed-out" readonly type="text">
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+            <input (keyup)="checkNumber(recessiveHomozygous, 'A'); toLower(recessiveHomozygous, 'A');" maxlength="1" pattern="[a-zA-Z]*" [ngClass]="{'missing-validation': !validateGenotypeFor(recessiveHomozygous)}" [(ngModel)]="recessiveHomozygous.alleleA" class="alleles-box" type="text">
+            <input (keyup)="checkNumber(recessiveHomozygous, 'B'); toLower(recessiveHomozygous, 'B');" maxlength="1" pattern="[a-zA-Z]*" [ngClass]="{'missing-validation': !validateGenotypeFor(recessiveHomozygous)}" [(ngModel)]="recessiveHomozygous.alleleB" class="alleles-box" type="text">
+            <span>N0</span>
+        </td>
+        <td>
+            <input [ngClass]="{'missing-validation': !validatePhenotypeFor(recessiveHomozygous)}" [(ngModel)]="recessiveHomozygous.phenotype" type="text">
+        </td>
+        <td>
+            <input 
+            [ngClass]="{'missing-validation': !validateGenotypeCountFor(recessiveHomozygous)}" 
+            [(ngModel)]="recessiveHomozygous.genotypeCount" 
+            (change)="reset()"
+            maxlength = "8"
+            min="0"
+            type="number">
+        </td>
+        <td>
+            <input [(ngModel)]="recessiveHomozygous.genotypeFrequency" class="grayed-out" readonly type="text">
+        </td>
+
+      </tr>
+
+      <tr *ngIf="calculated">
+    
+        <td class="borderless"></td>
+        <td class="borderless"></td>
+        <td>
+            <span>Populacja: {{totalPopulation}}</span>
+        </td>
+
+        <td>
+            <span>Σ = {{+dominantHeterozygous.genotypeFrequency + 
+                        +dominantHomozygous.genotypeFrequency +
+                        +recessiveHomozygous.genotypeFrequency}}
+            </span>
+        </td>
+
+      </tr>
+
+  
+    </table> 
+  
+
+  <h4>2. Obliczyć frekwencję genotypów:</h4>
+
+  <pre>
+      genotyp 
+    ___________
+
+     populacji
+  </pre>
+
+  <button [ngClass]="{'button-missing-validation': !validate()}"
+          (click)="calculateGenotypeFrequency()">
+          Obliczyć
+  </button>
+
+  <div class="canvas-holder">
+      <canvas id="genotype-frequency-chart"></canvas>
+  </div>
+
+  <br>
+  <br>
+
+  <div *ngIf="calculationsService.step >= 1">
+
+    <h4>3. Obliczyć frekwencję genów:</h4>
+
+    <pre>
+      p<sub>A</sub> = n<sub>2</sub> + n<sub>1</sub>/2  ->  {{calculationsService.pA}}
+    </pre>
+    <pre>
+      q<sub>a</sub> = n<sub>0</sub> + n<sub>1</sub>/2  ->  {{calculationsService.qa}}
+    </pre>
+    
+    <button [ngClass]="{'button-missing-validation': !validate()}"
+            (click)="calculateGeneFrequency()">
+            Obliczyć
+    </button>
+
+    <div class="canvas-holder">
+        <canvas id="gene-frequency-chart"></canvas>
+    </div>
+
+  </div>
+  <br>
+  <br>
+
+  <div *ngIf="calculationsService.step >= 2">
+  
+      <h4>4. Równowaga genetyczna:</h4>
+
+      <pre>
+        p<sup>2</sup> + 2pq + q<sup>2</sup> = 1  ->  {{calculationsService.pA}}<sup>2</sup> + 2 * {{calculationsService.pA}} * {{calculationsService.qa}} + {{calculationsService.qa}}<sup>2</sup> = <span class="red-highlight"> {{calculationsService.popGenBalance}} </span>
+      </pre>
+
+      <h4>Krzyżowanie losowe dla pokoleniu F<sub>1</sub></h4>
+
+      <table>
+          <tr>
+            <td class="grayed-out">&#9792; <span class="float-right"> &#9794; </span></td>
+            <td class="grayed-out">p {{calculationsService.pA}}</td>
+            <td class="grayed-out">q {{calculationsService.qa}}</td>
+          </tr>
+          <tr>
+              <td class="grayed-out">p {{calculationsService.pA}}</td>
+              <td> {{(calculationsService.pA * calculationsService.pA).toFixed(3)}} </td>
+              <td> {{(calculationsService.pA * calculationsService.qa).toFixed(3)}} </td>
+          </tr>
+          <tr>
+              <td class="grayed-out">q {{calculationsService.qa}}</td>
+              <td>{{(calculationsService.qa * calculationsService.pA).toFixed(3)}} </td>
+              <td>{{(calculationsService.qa * calculationsService.qa).toFixed(3)}}</td>
+          </tr>
+      </table>
+
+
+      <h4>Frekwencja oczekiwana genotypów w pokoleniu F<sub>1</sub></h4>
+      
+      <pre>
+          p<sup>2</sup> = {{(calculationsService.pA * calculationsService.pA).toFixed(3)}} ({{dominantHomozygous.alleleA + dominantHomozygous.alleleB}})
+          2pq = {{(2 * calculationsService.pA * calculationsService.qa).toFixed(3)}} ({{dominantHeterozygous.alleleA + dominantHeterozygous.alleleB}})
+          q<sup>2</sup> = {{(calculationsService.qa * calculationsService.qa).toFixed(3)}} ({{recessiveHomozygous.alleleA + recessiveHomozygous.alleleB}})
+      </pre>
+
+      <h4>Liczebność oczekiwana genotypów w pokoleniu F<sub>1</sub></h4>
+   
+      <pre>
+          {{dominantHomozygous.alleleA + dominantHomozygous.alleleB}} - {{(calculationsService.pA * calculationsService.pA).toFixed(3)}} x {{totalPopulation}} = <span class="red-highlight"> {{(calculationsService.expectedPopulation.dominantHomozygous).toFixed(3)}} </span>
+          {{dominantHeterozygous.alleleA + dominantHeterozygous.alleleB}} - {{(2 * calculationsService.pA * calculationsService.qa).toFixed(3)}} x {{totalPopulation}} = <span class="red-highlight"> {{(calculationsService.expectedPopulation.dominantHeterozygous).toFixed(3)}} </span>
+          {{recessiveHomozygous.alleleA + recessiveHomozygous.alleleB}} - {{(calculationsService.qa * calculationsService.qa).toFixed(3)}} x {{totalPopulation}} = <span class="red-highlight"> {{(calculationsService.expectedPopulation.recessiveHomozygous).toFixed(3)}} </span>
+          RAZEM = {{
+             ((calculationsService.pA * calculationsService.pA).toFixed(3) * totalPopulation
+              +
+              (2 * calculationsService.pA * calculationsService.qa).toFixed(3) * totalPopulation
+              +
+              (calculationsService.qa * calculationsService.qa).toFixed(3) * totalPopulation).toFixed(3)
+          }}
+      </pre>
+
+      <h4>Porównanie liczebność rzeczywista z liczebnością oczekiwaną używając test &#x03C7;<sup>2</sup></h4>
+
+      <pre>
+          <b>Liczebność rzeczywista:</b>
+          {{dominantHomozygous.alleleA + dominantHomozygous.alleleB}} - {{calculationsService.currentPopulation.dominantHomozygous}}
+          {{dominantHeterozygous.alleleA + dominantHeterozygous.alleleB}} - {{calculationsService.currentPopulation.dominantHeterozygous}}
+          {{recessiveHomozygous.alleleA + recessiveHomozygous.alleleB}} - {{calculationsService.currentPopulation.recessiveHomozygous}}
+
+          <b>Liczebność oczekiwana:</b>
+          {{dominantHomozygous.alleleA + dominantHomozygous.alleleB}} - {{(calculationsService.expectedPopulation.dominantHomozygous).toFixed(3)}}
+          {{dominantHeterozygous.alleleA + dominantHeterozygous.alleleB}} - {{(calculationsService.expectedPopulation.dominantHeterozygous).toFixed(3)}}
+          {{recessiveHomozygous.alleleA + recessiveHomozygous.alleleB}} - {{(calculationsService.expectedPopulation.recessiveHomozygous).toFixed(3)}}
+
+
+          <b>&#x03C7;<sup>2</sup><sub>0</sub> = Σ(E - e)<sup>2</sup>/e</b>  
+            
+          
+          ({{(calculationsService.currentPopulation.dominantHomozygous).toFixed(3)}} - {{(calculationsService.expectedPopulation.dominantHomozygous).toFixed(3)}})<sup>2</sup> / {{(calculationsService.expectedPopulation.dominantHomozygous).toFixed(3)}}
+                       +
+          ({{(calculationsService.currentPopulation.dominantHeterozygous).toFixed(3)}} - {{(calculationsService.expectedPopulation.dominantHeterozygous).toFixed(3)}})<sup>2</sup> / {{(calculationsService.expectedPopulation.dominantHeterozygous).toFixed(3)}}
+                       +
+          ({{(calculationsService.currentPopulation.recessiveHomozygous).toFixed(3)}} - {{(calculationsService.expectedPopulation.recessiveHomozygous).toFixed(3)}})<sup>2</sup> / {{(calculationsService.expectedPopulation.recessiveHomozygous).toFixed(3)}}
+          
+          = <span class="red-highlight">{{(calculationsService.calculatedPopGenBalance).toFixed(3)}}</span>
+
+
+          <b>&#x03C7;<sup>2</sup><sub>0.05</sub></b> = 5.991
+          <b>&#x03C7;<sup>2</sup><sub>0</sub></b> = {{(calculationsService.calculatedPopGenBalance).toFixed(3)}}
+
+          <span *ngIf="calculationsService.calculatedPopGenBalance > 5.991"> 
+          <b>&#x03C7;<sup>2</sup><sub>0</sub></b> > <b>&#x03C7;<sup>2</sup><sub>0.05</sub></b>
+          Populacja nie jest w stanie równowagi genetycznej.
+          </span>
+          <span *ngIf="calculationsService.calculatedPopGenBalance < 5.991"> 
+          <b>&#x03C7;<sup>2</sup><sub>0</sub></b> < <b>&#x03C7;<sup>2</sup><sub>0.05</sub></b>
+          Populacja jest w stanie równowagi genetycznej.
+          </span>
+
+      </pre>
+
+
+  </div>
+  
+</div>
+
+
+
