@@ -1,0 +1,64 @@
+.container {
+    margin: 0 auto;
+    width: 50%;
+    margin-top: 50px;
+}
+
+.przekatka {
+    background-color: red;
+}
+
+table {
+    padding:40px;
+
+    width: 100%;
+    border-style: solid;
+}
+
+th, td {
+    padding:10px;
+    border-width: 1px;
+    border-style: solid;
+}
+
+.input-text {
+    width: 100%;
+    height: 100%;
+}
+
+.missing-validation {
+    border-color: red;
+}
+.button-missing-validation {
+    border-color: red;
+    cursor:not-allowed;
+}
+
+.alleles-box {
+    width: 25%;
+    margin: 4px;
+}
+
+.borderless {
+    border-style: none !important;
+}
+
+.grayed-out {
+    background-color: lightgray;
+}
+
+.float-right {
+    float: right;
+}
+
+.canvas-holder {
+    margin: 0 auto;
+    height: 80% !important;
+    width: 50% !important;
+    padding: 20px;
+} 
+
+.red-highlight {
+    background-color: red;
+    color: white;
+}

@@ -1,0 +1,226 @@
+<div class="container">
+  <h3>Macierz A pokrewieństw</h3>
+
+  <h4>1. Wybrać matkę i ojciec dla każdego osobnika ('nz' znaczy, że nie wiemy) </h4>
+  <h4>2. Obliczyć spókrewnien</h4>
+  <button [ngClass]="{'button-missing-validation': !validate()}" (click)="calculate()">
+    Obliczyć
+  </button>
+
+  <div>
+
+    <table>
+      <tr>
+        <td class="grayed-out">RODZICE:</td>
+        <td class="grayed-out">
+          <!-- A -->
+          <select id="Amother">
+            <option (click)="select('A', 'nz', 'mother')"> nz </option>
+            <option (click)="select('A', 'A', 'mother')"> A </option>
+            <option (click)="select('A', 'B', 'mother')"> B </option>
+            <option (click)="select('A', 'C', 'mother')"> C </option>
+            <option (click)="select('A', 'D', 'mother')"> D </option>
+            <option (click)="select('A', 'E', 'mother')"> E </option>
+            <option (click)="select('A', 'F', 'mother')"> F </option>
+          </select>
+          -
+          <select id="Afather">
+            <option (click)="select('A', 'nz', 'father')"> nz </option>
+            <option (click)="select('A', 'A', 'father')"> A </option>
+            <option (click)="select('A', 'B', 'father')"> B </option>
+            <option (click)="select('A', 'C', 'father')"> C </option>
+            <option (click)="select('A', 'D', 'father')"> D </option>
+            <option (click)="select('A', 'E', 'father')"> E </option>
+            <option (click)="select('A', 'F', 'father')"> F </option>
+          </select>
+        </td>
+
+        <td class="grayed-out">
+          <!-- B -->
+          <select id="Bmother">
+              <option (click)="select('B', 'nz', 'mother')"> nz </option>
+              <option (click)="select('B', 'A', 'mother')"> A </option>
+              <option (click)="select('B', 'B', 'mother')"> B </option>
+              <option (click)="select('B', 'C', 'mother')"> C </option>
+              <option (click)="select('B', 'D', 'mother')"> D </option>
+              <option (click)="select('B', 'E', 'mother')"> E </option>
+              <option (click)="select('B', 'F', 'mother')"> F </option>
+            </select>
+            -
+            <select id="Bfather">
+              <option (click)="select('B', 'nz', 'father')"> nz </option>
+              <option (click)="select('B', 'A', 'father')"> A </option>
+              <option (click)="select('B', 'B', 'father')"> B </option>
+              <option (click)="select('B', 'C', 'father')"> C </option>
+              <option (click)="select('B', 'D', 'father')"> D </option>
+              <option (click)="select('B', 'E', 'father')"> E </option>
+              <option (click)="select('B', 'F', 'father')"> F </option>
+            </select>
+        </td>
+
+
+        <td class="grayed-out">
+          <!-- C -->
+          <select id="Cmother">
+              <option (click)="select('C', 'nz', 'mother')"> nz </option>
+              <option (click)="select('C', 'A', 'mother')"> A </option>
+              <option (click)="select('C', 'B', 'mother')"> B </option>
+              <option (click)="select('C', 'C', 'mother')"> C </option>
+              <option (click)="select('C', 'D', 'mother')"> D </option>
+              <option (click)="select('C', 'E', 'mother')"> E </option>
+              <option (click)="select('C', 'F', 'mother')"> F </option>
+            </select>
+            -
+            <select id="Cfather">
+              <option (click)="select('C', 'nz', 'father')"> nz </option>
+              <option (click)="select('C', 'A', 'father')"> A </option>
+              <option (click)="select('C', 'B', 'father')"> B </option>
+              <option (click)="select('C', 'C', 'father')"> C </option>
+              <option (click)="select('C', 'D', 'father')"> D </option>
+              <option (click)="select('C', 'E', 'father')"> E </option>
+              <option (click)="select('C', 'F', 'father')"> F </option>
+            </select>
+        </td>
+
+
+        <td class="grayed-out">
+          <!-- D -->
+          <select id="Dmother">
+              <option (click)="select('D', 'nz', 'mother')"> nz </option>
+              <option (click)="select('D', 'A', 'mother')"> A </option>
+              <option (click)="select('D', 'B', 'mother')"> B </option>
+              <option (click)="select('D', 'C', 'mother')"> C </option>
+              <option (click)="select('D', 'D', 'mother')"> D </option>
+              <option (click)="select('D', 'E', 'mother')"> E </option>
+              <option (click)="select('D', 'F', 'mother')"> F </option>
+            </select>
+            -
+            <select id="Dfather">
+              <option (click)="select('D', 'nz', 'father')"> nz </option>
+              <option (click)="select('D', 'A', 'father')"> A </option>
+              <option (click)="select('D', 'B', 'father')"> B </option>
+              <option (click)="select('D', 'C', 'father')"> C </option>
+              <option (click)="select('D', 'D', 'father')"> D </option>
+              <option (click)="select('D', 'E', 'father')"> E </option>
+              <option (click)="select('D', 'F', 'father')"> F </option>
+            </select>
+        </td>
+
+
+        <td class="grayed-out">
+          <!-- E -->
+          <select id="Emother">
+              <option (click)="select('E', 'nz', 'mother')"> nz </option>
+              <option (click)="select('E', 'A', 'mother')"> A </option>
+              <option (click)="select('E', 'B', 'mother')"> B </option>
+              <option (click)="select('E', 'C', 'mother')"> C </option>
+              <option (click)="select('E', 'D', 'mother')"> D </option>
+              <option (click)="select('E', 'E', 'mother')"> E </option>
+              <option (click)="select('E', 'F', 'mother')"> F </option>
+            </select>
+            -
+            <select id="Efather">
+              <option (click)="select('E', 'nz', 'father')"> nz </option>
+              <option (click)="select('E', 'A', 'father')"> A </option>
+              <option (click)="select('E', 'B', 'father')"> B </option>
+              <option (click)="select('E', 'C', 'father')"> C </option>
+              <option (click)="select('E', 'D', 'father')"> D </option>
+              <option (click)="select('E', 'E', 'father')"> E </option>
+              <option (click)="select('E', 'F', 'father')"> F </option>
+            </select>
+        </td>
+
+        <td class="grayed-out">
+          <!-- F -->
+          <select id="Fmother">
+              <option (click)="select('F', 'nz', 'mother')"> nz </option>
+              <option (click)="select('F', 'A', 'mother')"> A </option>
+              <option (click)="select('F', 'B', 'mother')"> B </option>
+              <option (click)="select('F', 'C', 'mother')"> C </option>
+              <option (click)="select('F', 'D', 'mother')"> D </option>
+              <option (click)="select('F', 'E', 'mother')"> E </option>
+              <option (click)="select('F', 'F', 'mother')"> F </option>
+            </select>
+            -
+            <select id="Ffather">
+              <option (click)="select('F', 'nz', 'father')"> nz </option>
+              <option (click)="select('F', 'A', 'father')"> A </option>
+              <option (click)="select('F', 'B', 'father')"> B </option>
+              <option (click)="select('F', 'C', 'father')"> C </option>
+              <option (click)="select('F', 'D', 'father')"> D </option>
+              <option (click)="select('F', 'E', 'father')"> E </option>
+              <option (click)="select('F', 'F', 'father')"> F </option>
+            </select>
+        </td>
+
+      </tr>
+
+      <tr>
+        <td class="grayed-out">ID</td>
+        <td class="grayed-out"> A </td>
+        <td class="grayed-out"> B </td>
+        <td class="grayed-out"> C </td>
+        <td class="grayed-out"> D </td>
+        <td class="grayed-out"> E </td>
+        <td class="grayed-out"> F </td>
+      </tr>
+      <tr>
+        <td class="grayed-out">A</td>
+        <td class="przekatka">{{AA.name}} = {{AA.value}}</td>
+        <td>{{AB.name}} = {{AB.value}}</td>
+        <td>{{AC.name}} = {{AC.value}}</td>
+        <td>{{AD.name}} = {{AD.value}}</td>
+        <td>{{AE.name}} = {{AE.value}}</td>
+        <td>{{AF.name}} = {{AF.value}}</td>
+      </tr>
+      <tr>
+        <td class="grayed-out">B</td>
+        <td>{{BA.name}} = {{BA.value}}</td>
+        <td class="przekatka">{{BB.name}} = {{BB.value}}</td>
+        <td>{{BC.name}} = {{BC.value}}</td>
+        <td>{{BD.name}} = {{BD.value}}</td>
+        <td>{{BE.name}} = {{BE.value}}</td>
+        <td>{{BF.name}} = {{BF.value}}</td>
+      </tr>
+      <tr>
+        <td class="grayed-out">C</td>
+        <td>{{CA.name}} = {{CA.value}}</td>
+        <td>{{CB.name}} = {{CB.value}}</td>
+        <td class="przekatka">{{CC.name}} = {{CC.value}}</td>
+        <td>{{CD.name}} = {{CD.value}}</td>
+        <td>{{CE.name}} = {{CE.value}}</td>
+        <td>{{CF.name}} = {{CF.value}}</td>
+      </tr>
+      <tr>
+        <td class="grayed-out">D</td>
+        <td>{{DA.name}} = {{DA.value}}</td>
+        <td>{{DB.name}} = {{DB.value}}</td>
+        <td>{{DC.name}} = {{DC.value}}</td>
+        <td class="przekatka">{{DD.name}} = {{DD.value}}</td>
+        <td>{{DE.name}} = {{DE.value}}</td>
+        <td>{{DF.name}} = {{DF.value}}</td>
+      </tr>
+      <tr>
+        <td class="grayed-out">E</td>
+        <td>{{EA.name}} = {{EA.value}}</td>
+        <td>{{EB.name}} = {{EB.value}}</td>
+        <td>{{EC.name}} = {{EC.value}}</td>
+        <td>{{ED.name}} = {{ED.value}}</td>
+        <td class="przekatka">{{EE.name}} = {{EE.value}}</td>
+        <td>{{EF.name}} = {{EF.value}}</td>
+      </tr>
+      <tr>
+        <td class="grayed-out">F</td>
+        <td>{{FA.name}} = {{FA.value}}</td>
+        <td>{{FB.name}} = {{FB.value}}</td>
+        <td>{{FC.name}} = {{FC.value}}</td>
+        <td>{{FD.name}} = {{FD.value}}</td>
+        <td>{{FE.name}} = {{FE.value}}</td>
+        <td class="przekatka">{{FF.name}} = {{FF.value}}</td>
+      </tr>
+    </table>
+
+
+  </div>
+
+</div>
